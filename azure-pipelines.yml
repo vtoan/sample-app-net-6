@@ -34,7 +34,7 @@ stages:
             inputs:
               command: build #buildAndPush
               repository: $(imageName)
-              dockerfile: "**/Dockerfile"
+              Dockerfile: "**/Dockerfile"
               # containerRegistry: $(dockerRegistryServiceConnection)
 
           - task: PublishPipelineArtifact@1
