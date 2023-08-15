@@ -6,7 +6,7 @@
 trigger:
 - main
 
-pool: Test1
+pool: Test Pool 1
 
 variables:
   buildConfiguration: 'Release'
