@@ -8,7 +8,6 @@ trigger:
 
 pool:
   name: Test 1
-  vmImage: ubuntu-latest
 
 variables:
   buildConfiguration: 'Release'
