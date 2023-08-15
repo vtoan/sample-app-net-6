@@ -10,7 +10,7 @@ pool: Test Pool 1
 
 variables:
   buildConfiguration: "Release"
-  dockerfilePath: "**/Dockerfile"
+  dockerfilePath: "Dockerfile"
   imageName: "sample-app"
   # dockerRegistryServiceConnection: ""
 
