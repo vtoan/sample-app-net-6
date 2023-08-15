@@ -4,18 +4,41 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- main
+  - main
 
 pool: Test Pool 1
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: "Release"
+  dockerfilePath: "**/Dockerfile"
+  imageName: "sample-app"
+  # dockerRegistryServiceConnection: ""
 
-steps:
-- task: UseDotNet@2
-  displayName: 'Install .NET Core SDK'
-  inputs:
-    version: '6.x'
-    
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+stages:
+  # - stage: Install dependencies
+  #   displayName: nstall dependencies stage
+  #   jobs:
+  #     - job: Install
+  #       steps:
+  #         - task: UseDotNet@2
+  #           displayName: "Install .NET Core SDK"
+  #           inputs:
+  #             version: "6.x"
+
+  - stage: Build
+    displayName: Build stage
+    jobs:
+      - job: Build
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: build #buildAndPush
+              repository: $(imageName)
+              dockerfile: $(dockerfilePath)
+              # containerRegistry: $(dockerRegistryServiceConnection)
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: "manifests"
+              path: "manifests"
