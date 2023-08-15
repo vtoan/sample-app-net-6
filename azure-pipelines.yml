@@ -10,7 +10,6 @@ pool: Test Pool 1
 
 variables:
   buildConfiguration: "Release"
-  dockerfilePath: "*/Dockerfile"
   imageName: "sample-app"
   # dockerRegistryServiceConnection: ""
 
@@ -35,7 +34,7 @@ stages:
             inputs:
               command: build #buildAndPush
               repository: $(imageName)
-              dockerfile: $(dockerfilePath)
+              dockerfile: "**/Dockerfile"
               # containerRegistry: $(dockerRegistryServiceConnection)
 
           - task: PublishPipelineArtifact@1
