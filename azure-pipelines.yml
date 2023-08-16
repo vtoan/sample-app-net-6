@@ -24,4 +24,5 @@ stages:
               repository: $(imageName)
               command: 'build'
               Dockerfile: 'Dockerfile'
+              buildContext: '.'
 
