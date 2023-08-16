@@ -9,21 +9,10 @@ trigger:
 pool: Test Pool 1
 
 variables:
-  buildConfiguration: "Release"
-  imageName: "sample-app"
-  # dockerRegistryServiceConnection: ""
+  buildConfiguration: 'Release'
+  imageName: 'sample-app'
 
 stages:
-  # - stage: Install dependencies
-  #   displayName: nstall dependencies stage
-  #   jobs:
-  #     - job: Install
-  #       steps:
-  #         - task: UseDotNet@2
-  #           displayName: "Install .NET Core SDK"
-  #           inputs:
-  #             version: "6.x"
-
   - stage: Build
     displayName: Build stage
     jobs:
@@ -32,11 +21,8 @@ stages:
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
-              repository: ${imageName}
-              command: "build"
-              Dockerfile: manifests/Dockerfile
+              repository: $(imageName)
+              command: 'build'
+              Dockerfile: 'Dockerfile'
+              buildContext: '.'
 
-          - task: PublishPipelineArtifact@1
-            inputs:
-              artifactName: "manifests"
-              path: "manifests"
