@@ -6,7 +6,11 @@ trigger:
 - main
 
 resources:
-- repo: self
+  repositories:
+    - repository: MyGitHubRepo # The name used to reference this repository in the checkout step
+      type: github
+      endpoint: vtoan
+      name: vtoan/sample-app-net-6-manifests
 
 variables:
 
@@ -28,6 +32,7 @@ stages:
     displayName: Build
     pool: Test Pool 1
     steps:
+    - checkout: self
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -54,6 +59,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: MyGitHubRepo
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
@@ -66,8 +72,8 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                $(Pipeline.Workspace)/sample-app-deployment.yaml
+                $(Pipeline.Workspace)/sample-app-svc.yaml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
