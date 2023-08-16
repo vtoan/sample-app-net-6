@@ -38,8 +38,7 @@ stages:
             inputs:
               repository: $(imageName)
               command: 'build'
-              Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-              buildContext: '$(Build.SourcesDirectory)'
+              Dockerfile: $(Build.Repository.LocalPath)/Dockerfile
 
           - task: PublishPipelineArtifact@1
             inputs:
