@@ -14,18 +14,18 @@ variables:
   # dockerRegistryServiceConnection: ""
 
 stages:
-  - stage: Install
-    displayName: Install dependencies stage
-    jobs:
-      - job: Install
-        steps:
-          # - task: UseDotNet@2
-          #   displayName: "Install .NET Core SDK"
-          #   inputs:
-          #     version: "6.x"
-          - task: DockerInstaller@0
-            inputs:
-              dockerVersion: '17.09.0-ce'
+  # - stage: Install
+  #   displayName: Install dependencies stage
+  #   jobs:
+  #     - job: Install
+  #       steps:
+  #         - task: UseDotNet@2
+  #            displayName: "Install .NET Core SDK"
+  #            inputs:
+  #              version: "6.x"
+  #         - task: DockerInstaller@0
+  #           inputs:
+  #             dockerVersion: '17.09.0-ce'
 
   - stage: Build
     displayName: Build stage
@@ -38,7 +38,8 @@ stages:
             inputs:
               repository: $(imageName)
               command: 'build'
-              Dockerfile: $(Build.Repository.LocalPath)/Dockerfile
+              Dockerfile: 'Dockerfile'
+              buildContext: '.'
 
           - task: PublishPipelineArtifact@1
             inputs:
