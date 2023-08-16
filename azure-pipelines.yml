@@ -9,8 +9,8 @@ trigger:
 pool: Test Pool 1
 
 variables:
-  buildConfiguration: "Release"
-  imageName: "sample-app"
+  buildConfiguration: 'Release'
+  imageName: 'sample-app'
   # dockerRegistryServiceConnection: ""
 
 stages:
@@ -27,7 +27,6 @@ stages:
             inputs:
               dockerVersion: '17.09.0-ce'
 
-
   - stage: Build
     displayName: Build stage
     dependsOn: Install
@@ -37,11 +36,11 @@ stages:
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
-              repository: ${imageName}
-              command: "build"
-              Dockerfile: manifests/Dockerfile
+              repository: $(imageName)
+              command: 'build'
+              Dockerfile: '**/Dockerfile'
 
           - task: PublishPipelineArtifact@1
             inputs:
-              artifactName: "manifests"
-              path: "manifests"
+              artifactName: 'manifests'
+              path: 'manifests'
