@@ -11,28 +11,13 @@ pool: Test Pool 1
 variables:
   buildConfiguration: 'Release'
   imageName: 'sample-app'
-  # dockerRegistryServiceConnection: ""
 
 stages:
-  # - stage: Install
-  #   displayName: Install dependencies stage
-  #   jobs:
-  #     - job: Install
-  #       steps:
-  #         - task: UseDotNet@2
-  #            displayName: "Install .NET Core SDK"
-  #            inputs:
-  #              version: "6.x"
-  #         - task: DockerInstaller@0
-  #           inputs:
-  #             dockerVersion: '17.09.0-ce'
-
   - stage: Build
     displayName: Build stage
     jobs:
       - job: Build
         steps:
-          - script: sudo chmod 666 /var/run/docker.sock
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
@@ -40,7 +25,3 @@ stages:
               command: 'build'
               Dockerfile: '**/Dockerfile'
 
-          - task: PublishPipelineArtifact@1
-            inputs:
-              artifactName: 'manifests'
-              path: 'manifests'
