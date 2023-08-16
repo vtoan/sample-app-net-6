@@ -40,9 +40,6 @@ stages:
               tags: |
                 $(tag)
 
-          - upload: manifests
-            artifact: manifests
-
   - stage: Deploy
     displayName: Deploy stage
     dependsOn: Build
@@ -69,8 +66,8 @@ stages:
                   inputs:
                     action: deploy
                     manifests: |
-                      $(Build.SourcesDirectory)/deployment.yml
-                      $(Build.SourcesDirectory)/service.yml
+                      $(Build.SourcesDirectory)/sample-app-deployment.yaml
+                      $(Build.SourcesDirectory)/sample-app-svc.yaml
                     imagePullSecrets: |
                       $(imagePullSecret)
                     containers: |
